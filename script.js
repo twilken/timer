@@ -1,3 +1,4 @@
+// Constants
 var SECONDS_PER_MINUTE = 60;
 var SECONDS_PER_HOUR = 3600;
 var MILLISECONDS_PER_SECOND = 1000;
@@ -29,7 +30,7 @@ function init() {
 	var startButton = document.getElementById("start");
 	startButton.addEventListener("click", startAndStopTimer, false);
 
-	timer();
+	// timer();
 	// update the tag with id "countdown" every 1 second
 	// t = setInterval(timer, 1000);
 }
