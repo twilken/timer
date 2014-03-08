@@ -7,41 +7,48 @@ var TIMER_UPDATE_INTERVAL = 1000;
 window.onload = init;
 
 // set the date we're counting down to
-var target_date = new Date("Mar 10, 2014").getTime();
+var target_date;
+var secondsOnTimer = 1500;
+var timerIntervalID
 
-// variables for time units
-var hours, minutes, seconds;
+function init() {
+	var startButton = document.getElementById("startStopButton");
+	startButton.addEventListener("click", startStopButtonPressed, false);
+}
 
-var t;
-
-function startAndStopTimer() {
-	var button = document.getElementById("start");
+function startStopButtonPressed() {
+	var button = document.getElementById("startStopButton");
 	var oldText = button.innerHTML;
 	if (oldText == "Start") {
-		t = setInterval(timer, TIMER_UPDATE_INTERVAL);
+		startTimer(secondsOnTimer);
 		button.innerHTML = "Stop";
 	} else {
-		clearInterval(t);
+		stopTimer();
 		button.innerHTML = "Start";
 	}
 }
 
-function init() {
-	var startButton = document.getElementById("start");
-	startButton.addEventListener("click", startAndStopTimer, false);
-
-	// timer();
-	// update the tag with id "countdown" every 1 second
-	// t = setInterval(timer, 1000);
+function startTimer(seconds) {
+	var current_date = new Date().getTime();
+	targetDate = current_date + (seconds * MILLISECONDS_PER_SECOND);
+	timerIntervalID = setInterval(function() { timer(targetDate); },
+		TIMER_UPDATE_INTERVAL);
 }
 
-function timer() {
+function stopTimer() {
+	clearInterval(timerIntervalID);
+}
+
+function timer(targetDate) {
+	// variables for time units
+	var hours, minutes, seconds;
+
 	// get tag element
 	var countdown = document.getElementById("countdown");
 
 	// find the amount of "seconds" between now and target
 	var current_date = new Date().getTime();
-	var seconds_left = (target_date - current_date) / MILLISECONDS_PER_SECOND;
+	var seconds_left = (targetDate - current_date) / MILLISECONDS_PER_SECOND;
 
 	hours = parseInt(seconds_left / SECONDS_PER_HOUR);
 	seconds_left = seconds_left % SECONDS_PER_HOUR;
