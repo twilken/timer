@@ -9,7 +9,7 @@ window.onload = init;
 var target_date = new Date("Mar 10, 2014").getTime();
 
 // variables for time units
-var days, hours, minutes, seconds;
+var hours, minutes, seconds;
 
 var t;
 
