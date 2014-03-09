@@ -1,62 +1,75 @@
-// Constants
-var SECONDS_PER_MINUTE = 60;
-var SECONDS_PER_HOUR = 3600;
-var MILLISECONDS_PER_SECOND = 1000;
-var TIMER_UPDATE_INTERVAL = 1000;
+// Timer class
+function Timer(updateCallback) {
+	this.updateCallback = updateCallback;
+	this.intervalID = 0;
+	this.timeRemaining = 0;
+	this.startTime = 0;
+	this.targetTime = 0;
+	this.updateIntervalInMs = 500;
+};
+
+Timer.prototype.start = function() {
+	this.startTime = new Date().getTime();
+	this.targetTime = this.startTime + this.timeRemaining;
+	var t = this;
+	this.intervalID = setInterval(function() { t.update(); }, this.updateIntervalInMs);
+	console.log("start: timer with " + (this.targetTime - this.startTime) / 1000 / 60 + "m");
+	console.log("start: this.targetTime = " + this.targetTime);
+	console.log("start: this.timeRemaining = " + this.timeRemaining);
+};
+
+Timer.prototype.pause = function() {
+	clearInterval(this.intervalID);
+	this.timeRemaining -= new Date().getTime() - this.startTime;
+};
+
+Timer.prototype.setTime = function(seconds) {
+	this.timeRemaining = seconds * 1000;
+	console.log("setTime: this.timeRemaining = " + this.timeRemaining);
+};
+
+Timer.prototype.update = function() {
+	var now = new Date().getTime();
+	this.timeRemaining = this.targetTime - now;
+	var secondsRemaining = Math.floor(this.timeRemaining / 1000);
+	console.log("update: this.timeRemaining = " + this.timeRemaining);
+	console.log("update: secondsRemaining = " + this.timeRemaining / 1000);
+	console.log("update: this.targetTime = " + this.targetTime / 1000);
+
+	// How to assign a function to a class property and call it here?
+	// this.updateCallback(secondsRemaining);
+	updateTimerDisplay(secondsRemaining);
+};
+
+var timer;
 
 window.onload = init;
-
-// set the date we're counting down to
-var target_date;
-var secondsOnTimer = 1500;
-var timerIntervalID
 
 function init() {
 	var startButton = document.getElementById("startStopButton");
 	startButton.addEventListener("click", startStopButtonPressed, false);
-}
+	timer = new Timer(updateTimerDisplay);
+	timer.setTime(1500);
+};
 
 function startStopButtonPressed() {
 	var button = document.getElementById("startStopButton");
 	var oldText = button.innerHTML;
 	if (oldText == "Start") {
-		startTimer(secondsOnTimer);
+		timer.start();
 		button.innerHTML = "Stop";
 	} else {
-		stopTimer();
+		timer.pause();
 		button.innerHTML = "Start";
 	}
-}
+};
 
-function startTimer(seconds) {
-	var current_date = new Date().getTime();
-	targetDate = current_date + (seconds * MILLISECONDS_PER_SECOND);
-	timerIntervalID = setInterval(function() { timer(targetDate); },
-		TIMER_UPDATE_INTERVAL);
-}
-
-function stopTimer() {
-	clearInterval(timerIntervalID);
-}
-
-function timer(targetDate) {
-	// variables for time units
-	var hours, minutes, seconds;
-
-	// get tag element
+function updateTimerDisplay(secondsRemaining) {
+	var hours = parseInt(secondsRemaining / 3600);
+	secondsRemaining = secondsRemaining % 3600;
+	var minutes = parseInt(secondsRemaining / 60);
+	var seconds = parseInt(secondsRemaining % 60);
 	var countdown = document.getElementById("countdown");
-
-	// find the amount of "seconds" between now and target
-	var current_date = new Date().getTime();
-	var seconds_left = (targetDate - current_date) / MILLISECONDS_PER_SECOND;
-
-	hours = parseInt(seconds_left / SECONDS_PER_HOUR);
-	seconds_left = seconds_left % SECONDS_PER_HOUR;
-
-	minutes = parseInt(seconds_left / SECONDS_PER_MINUTE);
-	seconds = parseInt(seconds_left % SECONDS_PER_MINUTE);
-
-	// format countdown string + set tag value
-	countdown.innerHTML = hours + "h "
-	+ minutes + "m " + seconds + "s";
-}
+	countdown.innerHTML = hours + "h "+ minutes + "m " + seconds + "s";
+	console.log(hours + "h "+ minutes + "m " + seconds + "s");
+};
