@@ -7,6 +7,7 @@ function Timer(updateCallback) {
 	this.timeRemaining = 0;
 	this.targetTime = 0;
 	this.updateIntervalInMs = 200;
+	this.lastSetTime = 0;
 };
 
 Timer.prototype.start = function() {
@@ -20,8 +21,14 @@ Timer.prototype.pause = function() {
 	clearInterval(this.intervalID);
 };
 
+Timer.prototype.reset = function() {
+	this.pause();
+	this.timeRemaining = this.lastSetTime;
+};
+
 Timer.prototype.setTime = function(seconds) {
 	this.timeRemaining = seconds * 1000;
+	this.lastSetTime = this.timeRemaining;
 };
 
 Timer.prototype.update = function() {
@@ -41,6 +48,8 @@ window.onload = init;
 function init() {
 	var startButton = document.getElementById("startPauseButton");
 	startButton.addEventListener("click", startPauseButtonPressed, false);
+	var resetButton = document.getElementById("resetButton");
+	resetButton.addEventListener("click", resetButtonPressed, false);
 	timer = new Timer(updateTimerDisplay);
 	timer.setTime(TIMER_DEFAULT_IN_SECONDS);
 };
@@ -58,6 +67,13 @@ function startPauseButtonPressed() {
 	}
 };
 
+function resetButtonPressed() {
+	timer.reset();
+	var button = document.getElementById("startPauseButton");
+	button.innerHTML = "Start";
+	updateTimerDisplay(timer.lastSetTime / 1000);
+}
+
 function setupTimer() {
 	var text = document.getElementById("minutes");
 	var minutes = parseInt(text.value);
@@ -65,10 +81,6 @@ function setupTimer() {
 		text.value = "";
 		timer.setTime(minutes * 60);
 	}
-}
-
-function resetTimer() {
-
 }
 
 function updateTimerDisplay(secondsRemaining) {
