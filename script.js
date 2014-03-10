@@ -52,6 +52,7 @@ function init() {
 	resetButton.addEventListener("click", resetButtonPressed, false);
 	timer = new Timer(updateTimerDisplay);
 	timer.setTime(TIMER_DEFAULT_IN_SECONDS);
+	updateTimerDisplay(timer.lastSetTime / 1000);
 };
 
 function startPauseButtonPressed() {
