@@ -53,6 +53,8 @@ function init() {
 	timer = new Timer(updateTimerDisplay);
 	timer.setTime(TIMER_DEFAULT_IN_SECONDS);
 	updateTimerDisplay(timer.lastSetTime / 1000);
+	var minutes = document.getElementById("minutes");
+	minutes.value = TIMER_DEFAULT_IN_SECONDS / 60;
 };
 
 function startPauseButtonPressed() {

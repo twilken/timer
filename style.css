@@ -15,21 +15,20 @@ html {
 }
 
 #countdown {
+	font-size: 300%;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	background: #d3e4e5;
 	border-radius: 3px;
+	cursor: default;
 }
 
 .box {
 	padding: 10px;
-	/*margin-top: 10px;*/
-	/*margin-bottom: 10px;*/
 	margin-left: auto;
 	margin-right: auto;
-	width: 60%;
-	height: 50%;
+	/*width: 60%;*/
 	background: #73b4c5;
 }
 
@@ -44,6 +43,14 @@ html {
 	border-bottom-right-radius: 3px;
 }
 
+button {
+	display: inline-block;
+	padding: 10px;
+	background: #d3e4e5;
+	cursor: pointer;
+}
+
 input {
 	text-align: right;
+	padding: 10px;
 }
