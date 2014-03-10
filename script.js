@@ -1,3 +1,5 @@
+var DEFAULT_MINUTES = 25;
+
 // Timer class
 function Timer(updateCallback) {
 	this.updateCallback = updateCallback;
@@ -37,23 +39,34 @@ var timer;
 window.onload = init;
 
 function init() {
-	var startButton = document.getElementById("startStopButton");
-	startButton.addEventListener("click", startStopButtonPressed, false);
+	var startButton = document.getElementById("startPauseButton");
+	startButton.addEventListener("click", startPauseButtonPressed, false);
 	timer = new Timer(updateTimerDisplay);
 	timer.setTime(1500);
 };
 
-function startStopButtonPressed() {
-	var button = document.getElementById("startStopButton");
+function startPauseButtonPressed() {
+	timer.setTime(getSecondsFromUser());
+	var button = document.getElementById("startPauseButton");
 	var oldText = button.innerHTML;
 	if (oldText == "Start") {
 		timer.start();
-		button.innerHTML = "Stop";
+		button.innerHTML = "Pause";
 	} else {
 		timer.pause();
 		button.innerHTML = "Start";
 	}
 };
+
+function getSecondsFromUser() {
+	var text = document.getElementById("minutes");
+	var minutes = parseInt(text.value);
+	if (isNaN(minutes)) {
+		minutes = DEFAULT_MINUTES;
+	}
+	text.value = "";
+	return minutes * 60;
+}
 
 function updateTimerDisplay(secondsRemaining) {
 	var hours = parseInt(secondsRemaining / 3600);

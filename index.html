@@ -8,12 +8,13 @@
 	</head>
 	<body>
 		<div id="container">
-			<div class="box">set time</div>
-			<div class="box">
-				<button id="startStopButton">Start</button>
+			<div class="box" id="controlBox">
+				<input type="text" id="minutes" name="minutes" />
+				<label for="minutes">minutes</label>
+				<button id="startPauseButton">Start</button>
+				<button id="resetButton">Reset</button>
 			</div>
-			<div class="box"><span id="countdown"></span></div>
-			<!-- <span id="countdown"></span> -->
+			<div class="box" id="timerBox"><span id="countdown"></span></div>
 		</div>
 	</body>
 </html>
