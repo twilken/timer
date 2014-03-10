@@ -3,21 +3,19 @@ function Timer(updateCallback) {
 	this.updateCallback = updateCallback;
 	this.intervalID = 0;
 	this.timeRemaining = 0;
-	this.startTime = 0;
 	this.targetTime = 0;
-	this.updateIntervalInMs = 500;
+	this.updateIntervalInMs = 200;
 };
 
 Timer.prototype.start = function() {
-	this.startTime = new Date().getTime();
-	this.targetTime = this.startTime + this.timeRemaining;
+	startTime = new Date().getTime();
+	this.targetTime = startTime + this.timeRemaining;
 	var t = this;
 	this.intervalID = setInterval(function() { t.update(); }, this.updateIntervalInMs);
 };
 
 Timer.prototype.pause = function() {
 	clearInterval(this.intervalID);
-	this.timeRemaining -= new Date().getTime() - this.startTime;
 };
 
 Timer.prototype.setTime = function(seconds) {
