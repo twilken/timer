@@ -1,4 +1,4 @@
-var DEFAULT_MINUTES = 25;
+var TIMER_DEFAULT_IN_SECONDS = 1500;
 
 // Timer class
 function Timer(updateCallback) {
@@ -42,14 +42,14 @@ function init() {
 	var startButton = document.getElementById("startPauseButton");
 	startButton.addEventListener("click", startPauseButtonPressed, false);
 	timer = new Timer(updateTimerDisplay);
-	timer.setTime(1500);
+	timer.setTime(TIMER_DEFAULT_IN_SECONDS);
 };
 
 function startPauseButtonPressed() {
-	timer.setTime(getSecondsFromUser());
 	var button = document.getElementById("startPauseButton");
 	var oldText = button.innerHTML;
 	if (oldText == "Start") {
+		setupTimer();
 		timer.start();
 		button.innerHTML = "Pause";
 	} else {
@@ -58,14 +58,17 @@ function startPauseButtonPressed() {
 	}
 };
 
-function getSecondsFromUser() {
+function setupTimer() {
 	var text = document.getElementById("minutes");
 	var minutes = parseInt(text.value);
-	if (isNaN(minutes)) {
-		minutes = DEFAULT_MINUTES;
+	if (!isNaN(minutes)) { // User entered a new time.
+		text.value = "";
+		timer.setTime(minutes * 60);
 	}
-	text.value = "";
-	return minutes * 60;
+}
+
+function resetTimer() {
+
 }
 
 function updateTimerDisplay(secondsRemaining) {
