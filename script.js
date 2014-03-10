@@ -1,8 +1,9 @@
 var TIMER_DEFAULT_IN_SECONDS = 1500;
 
 // Timer class
-function Timer(updateCallback) {
+function Timer(updateCallback, finishedCallback) {
 	this.updateCallback = updateCallback;
+	this.finishedCallback = finishedCallback;
 	this.intervalID = 0;
 	this.timeRemaining = 0;
 	this.targetTime = 0;
@@ -34,6 +35,14 @@ Timer.prototype.setTime = function(seconds) {
 Timer.prototype.update = function() {
 	var now = new Date().getTime();
 	this.timeRemaining = this.targetTime - now;
+	if (this.timeRemaining <= 0) {
+		this.timeRemaining = 0;
+		this.pause();
+
+		// replace with "finishedCallback" function callback
+		var button = document.getElementById("startPauseButton");
+		button.innerHTML = "Start";
+	}
 	var secondsRemaining = Math.floor(this.timeRemaining / 1000);
 
 	// How to assign a function to a class property and call it here?
