@@ -1,6 +1,7 @@
 var TIMER_DEFAULT_IN_SECONDS = 1500;
 
-// Timer class
+// Timer class implements a simple timer. On every update event updateCallback
+// gets called. When the Timer finishes finishedCallback gets called.
 function Timer(updateCallback, finishedCallback) {
 	this.updateCallback = updateCallback;
 	this.finishedCallback = finishedCallback;
@@ -11,6 +12,7 @@ function Timer(updateCallback, finishedCallback) {
 	this.lastSetTime = 0;
 };
 
+// Start or resume the timer.
 Timer.prototype.start = function() {
 	startTime = new Date().getTime();
 	this.targetTime = startTime + this.timeRemaining;
@@ -18,30 +20,32 @@ Timer.prototype.start = function() {
 	this.intervalID = setInterval(function() { t.update(); }, this.updateIntervalInMs);
 };
 
+// Pause the timer.
 Timer.prototype.pause = function() {
 	clearInterval(this.intervalID);
 };
 
+// Reset the timer to its last set time. The setTime function is the only
+// way to set the time.
 Timer.prototype.reset = function() {
 	this.pause();
 	this.timeRemaining = this.lastSetTime;
 };
 
-Timer.prototype.setTime = function(seconds) {
-	this.timeRemaining = seconds * 1000;
+// Set the timer to timeInSeconds.
+Timer.prototype.setTime = function(timeInSeconds) {
+	this.timeRemaining = timeInSeconds * 1000;
 	this.lastSetTime = this.timeRemaining;
 };
 
+// Update keeps track of the passed time and executes callbacks. There is no
+// need to call this method, it gets called automatically.
 Timer.prototype.update = function() {
 	var now = new Date().getTime();
 	this.timeRemaining = this.targetTime - now;
 	if (this.timeRemaining <= 0) {
 		this.timeRemaining = 0;
 		this.pause();
-
-		// replace with "finishedCallback" function callback
-		// var button = document.getElementById("startPauseButton");
-		// button.innerHTML = "Start";
 		this.finishedCallback();
 	}
 	var secondsRemaining = Math.floor(this.timeRemaining / 1000);
@@ -49,9 +53,9 @@ Timer.prototype.update = function() {
 };
 
 var timer;
-
 window.onload = init;
 
+// Initial setup
 function init() {
 	var startButton = document.getElementById("startPauseButton");
 	startButton.addEventListener("click", startPauseButtonPressed, false);
@@ -64,6 +68,7 @@ function init() {
 	minutes.value = TIMER_DEFAULT_IN_SECONDS / 60;
 };
 
+// Event handler method for the startPauseButton.
 function startPauseButtonPressed() {
 	var button = document.getElementById("startPauseButton");
 	var oldText = button.innerHTML;
@@ -77,6 +82,7 @@ function startPauseButtonPressed() {
 	}
 };
 
+// Event handler method for the resetButton.
 function resetButtonPressed() {
 	timer.reset();
 	var button = document.getElementById("startPauseButton");
@@ -84,6 +90,7 @@ function resetButtonPressed() {
 	updateTimerDisplay(timer.lastSetTime / 1000);
 }
 
+// Set timer to the time enterered into the minutes text field.
 function setupTimer() {
 	var text = document.getElementById("minutes");
 	var minutes = parseInt(text.value);
@@ -93,6 +100,7 @@ function setupTimer() {
 	}
 }
 
+// Update the timer display to secondsReminaing.
 function updateTimerDisplay(secondsRemaining) {
 	var hours = parseInt(secondsRemaining / 3600);
 	secondsRemaining = secondsRemaining % 3600;
@@ -102,6 +110,7 @@ function updateTimerDisplay(secondsRemaining) {
 	countdown.innerHTML = hours + "h "+ minutes + "m " + seconds + "s";
 };
 
+// Do everything that needs to be done when the timer reaches zero.
 function timeIsUp() {
 	var button = document.getElementById("startPauseButton");
 	button.innerHTML = "Start";
