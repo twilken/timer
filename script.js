@@ -40,14 +40,12 @@ Timer.prototype.update = function() {
 		this.pause();
 
 		// replace with "finishedCallback" function callback
-		var button = document.getElementById("startPauseButton");
-		button.innerHTML = "Start";
+		// var button = document.getElementById("startPauseButton");
+		// button.innerHTML = "Start";
+		this.finishedCallback();
 	}
 	var secondsRemaining = Math.floor(this.timeRemaining / 1000);
-
-	// How to assign a function to a class property and call it here?
-	// this.updateCallback(secondsRemaining);
-	updateTimerDisplay(secondsRemaining);
+	this.updateCallback(secondsRemaining);
 };
 
 var timer;
@@ -59,7 +57,7 @@ function init() {
 	startButton.addEventListener("click", startPauseButtonPressed, false);
 	var resetButton = document.getElementById("resetButton");
 	resetButton.addEventListener("click", resetButtonPressed, false);
-	timer = new Timer(updateTimerDisplay);
+	timer = new Timer(updateTimerDisplay, timeIsUp);
 	timer.setTime(TIMER_DEFAULT_IN_SECONDS);
 	updateTimerDisplay(timer.lastSetTime / 1000);
 	var minutes = document.getElementById("minutes");
@@ -103,3 +101,10 @@ function updateTimerDisplay(secondsRemaining) {
 	var countdown = document.getElementById("countdown");
 	countdown.innerHTML = hours + "h "+ minutes + "m " + seconds + "s";
 };
+
+function timeIsUp() {
+	var button = document.getElementById("startPauseButton");
+	button.innerHTML = "Start";
+	var text = document.getElementById("minutes");
+	text.value = timer.lastSetTime / 1000 / 60;
+}
