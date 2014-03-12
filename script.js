@@ -112,6 +112,8 @@ function updateTimerDisplay(secondsRemaining) {
 
 // Do everything that needs to be done when the timer reaches zero.
 function timeIsUp() {
+	var sound = new Audio('audio/timeIsUp.mp3');
+	sound.play();
 	var button = document.getElementById("startPauseButton");
 	button.innerHTML = "Start";
 	var text = document.getElementById("minutes");
