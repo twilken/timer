@@ -141,6 +141,8 @@ function timeIsUp() {
 	var text = document.getElementById("minutes");
 	text.value = timer.lastSetTime / 1000 / 60;
 	if (browserSupportsNotifications && userAllowsNotifications) {
-		var notification = new Notification("Time is up!");
+		var options = new Object();
+		options.icon = "favicon.ico";
+		var notification = new Notification("Time is up!", options);
 	}
 }
