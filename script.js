@@ -54,6 +54,8 @@ Timer.prototype.update = function() {
 
 var timer;
 window.onload = init;
+var browserSupportsNotifications = false;
+var userAllowsNotifications = false;
 
 // Initial setup
 function init() {
@@ -66,6 +68,26 @@ function init() {
 	updateTimerDisplay(timer.lastSetTime / 1000);
 	var minutes = document.getElementById("minutes");
 	minutes.value = TIMER_DEFAULT_IN_SECONDS / 60;
+	setupNotifications();
+};
+
+// If notifications are not already allowed, ask the user for permission.
+// Right now this is not properly supported in Chrome.
+function setupNotifications() {
+	if ("Notification" in window) { // Browser supports notifications
+		browserSupportsNotifications = true;
+		if (Notification.permission === "granted") { // User already allows Notifications
+			userAllowsNotifications = true;
+		}
+		else {
+			Notification.requestPermission( function(permission) {
+				if (permission === "granted") {
+					userAllowsNotifications = true;
+				}
+			});
+		}
+	}
+
 };
 
 // Event handler method for the startPauseButton.
@@ -118,4 +140,7 @@ function timeIsUp() {
 	button.innerHTML = "Start";
 	var text = document.getElementById("minutes");
 	text.value = timer.lastSetTime / 1000 / 60;
+	if (browserSupportsNotifications && userAllowsNotifications) {
+		var notification = new Notification("Time is up!");
+	}
 }
