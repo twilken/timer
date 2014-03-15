@@ -1,40 +1,37 @@
 html {
 	font-family: monospace;
-	font-size: 100%;
+    background: #fff;
+    color: #444;
 }
 
 #container {
-	padding-top: 0;
+    margin-top: 100px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 20px;
-	display: block;
-	width: 80%;
-	background: #d3e4e5;
+    max-width: 500px;
+    min-width: 400px;
 	border-radius: 3px;
 }
 
 #countdown {
-	font-size: 300%;
+	font-size: 470%;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	background: #d3e4e5;
 	border-radius: 3px;
 	cursor: default;
 }
 
 .box {
-	padding: 10px;
+	padding: 30px;
 	margin-left: auto;
 	margin-right: auto;
-	background: #73b4c5;
 }
 
 #controlBox {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
-	border-bottom: solid 1px #d3e4e5;
+	border-bottom: solid 1px #ccc;
 }
 
 #timerBox {
@@ -45,7 +42,7 @@ html {
 button {
 	display: inline-block;
 	padding: 10px;
-	background: #d3e4e5;
+	background: #ccccff;
 	cursor: pointer;
 	border: none;
 }
