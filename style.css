@@ -45,9 +45,19 @@ button {
 	background: #ccccff;
 	cursor: pointer;
 	border: none;
+	width: 100px;
 }
 
 input {
 	text-align: right;
 	padding: 10px;
+}
+
+#minutes {
+	border: none;
+	background: #eeeeff;
+}
+
+#minutes-label {
+	margin-right: 20px;
 }
