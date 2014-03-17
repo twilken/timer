@@ -42,7 +42,7 @@ html {
 button {
 	display: inline-block;
 	padding: 10px;
-	background: #ccccff;
+	background: #bbbbee;
 	cursor: pointer;
 	border: none;
 	width: 100px;
@@ -55,7 +55,7 @@ input {
 
 #minutes {
 	border: none;
-	background: #eeeeff;
+	background: #ddddee;
 }
 
 #minutes-label {
