@@ -145,4 +145,12 @@ function timeIsUp() {
 		options.icon = "favicon.ico";
 		var notification = new Notification("Time is up!", options);
 	}
+	flashBackground();
+}
+
+function flashBackground() {
+	document.body.style.backgroundColor = "#cc6666";
+	setTimeout( function() {
+		document.body.style.backgroundColor = "#ffffff";
+	}, 1000);
 }
