@@ -134,10 +134,15 @@ function updateTimerDisplay(secondsRemaining) {
 	var hourDisplay = document.getElementById("num-of-hours");
 	var minuteDisplay = document.getElementById("num-of-minutes");
 	var secondDisplay = document.getElementById("num-of-seconds");
-	hourDisplay.innerHTML = hours;
-	minuteDisplay.innerHTML = minutes;
-	secondDisplay.innerHTML = seconds;
+	hourDisplay.innerHTML = pad(hours, 2);
+	minuteDisplay.innerHTML = pad(minutes, 2);
+	secondDisplay.innerHTML = pad(seconds, 2);
 };
+
+// Return num as string with size digits. Basically adding leading zeros.
+function pad(num, size) {
+	return ('000000000' + num).substr(-size);
+}
 
 // Do everything that needs to be done when the timer reaches zero.
 function timeIsUp() {
