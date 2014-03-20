@@ -118,6 +118,9 @@ function setupTimer() {
 	var minutes = parseInt(text.value);
 	if (!isNaN(minutes)) { // User entered a new time.
 		text.value = "";
+		if (minutes > 1440) { // Set 24 hours as maximum time
+			minutes = 1440;
+		}
 		timer.setTime(minutes * 60);
 	}
 }
