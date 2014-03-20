@@ -128,8 +128,12 @@ function updateTimerDisplay(secondsRemaining) {
 	secondsRemaining = secondsRemaining % 3600;
 	var minutes = parseInt(secondsRemaining / 60);
 	var seconds = parseInt(secondsRemaining % 60);
-	var countdown = document.getElementById("countdown");
-	countdown.innerHTML = hours + "h "+ minutes + "m " + seconds + "s";
+	var hourDisplay = document.getElementById("num-of-hours");
+	var minuteDisplay = document.getElementById("num-of-minutes");
+	var secondDisplay = document.getElementById("num-of-seconds");
+	hourDisplay.innerHTML = hours;
+	minuteDisplay.innerHTML = minutes;
+	secondDisplay.innerHTML = seconds;
 };
 
 // Do everything that needs to be done when the timer reaches zero.

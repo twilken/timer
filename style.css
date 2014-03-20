@@ -13,13 +13,20 @@ html {
 	border-radius: 3px;
 }
 
-#countdown {
+#timer-box {
 	font-size: 470%;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 3px;
 	cursor: default;
+}
+
+.time-unit {
+	color: #888888;
+	font-size: 50%;
+	position: relative;
+	left: -30px;
 }
 
 .box {
@@ -34,11 +41,6 @@ html {
 	border-bottom: solid 1px #ccc;
 }
 
-#timerBox {
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-
 button {
 	display: inline-block;
 	padding: 10px;
@@ -51,6 +53,7 @@ button {
 input {
 	text-align: right;
 	padding: 10px;
+	width: 100px;
 }
 
 #minutes {
